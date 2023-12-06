@@ -1,5 +1,6 @@
 // add class navbarDark on navbar scroll
-const header = document.querySelector('.navbar');
+const header = document.querySelector('.navbarDark');
+header.classList.add('navbarDark')
 console.log(header)
 window.onscroll = function() {
     const top = window.scrollY;

@@ -1,3 +1,39 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+.section:-webkit-scrollbar{
+    display: none;
+}
+
+.section-container {
+    padding: 5rem;
+    height: 100vh;
+    /* display: flex;
+    flex-direction: column; */
+    align-items: center;
+}
+
+.container {
+    height: 90%;
+    /* Füge hier weitere Styles für den inneren Container hinzu, wenn benötigt */
+  }
+
+.scroll-container {
+    height: 100%;
+    padding: auto;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.scroll-container::-webkit-scrollbar{
+    display: none;
+}
+
 /* display background color black on navbar scroll */
 .navbarScroll.navbarDark {
     background-color: black;
@@ -5,8 +41,9 @@
 
 /* hero background image */
 .bgimage {
-    height:100vh;
-    background: url('images/heroImage.jpeg');
+    height:100%;
+    width: 100%;
+    background: url('images/heroImage.jpg');
     background-size:cover;
     position:relative;
 }
@@ -23,7 +60,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: black;
+}
+
+.section {
+    height: 100vh;
+    scroll-snap-align: start;
+    /* overflow: scroll; */
 }
 
 /* spacing on all sections */
@@ -35,8 +78,10 @@
     padding-bottom: 4rem;
 }
 /* about section image css */
+
 .imageAboutPage {
-    width: 100%;
+    max-height: 80vh;
+    max-width: 90%;
 }
 
 /* services section css */
