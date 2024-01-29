@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Portfolio Website-Jannik Evers</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- linking css file -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/31149d48b0.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light navbarScroll">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html#portfolio">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#introduction">Introduction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#algorithm">Algorithm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#microcanonical">Microcanonical</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#canonical">Canonical</a>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- introduction section-->
+    <div class = "section">
+        <section class= "introduction" id="introduction">
+            <div class="section-container">
+
+                <div class="container mt-4 pt-4 mb-4 pb-4">
+                    <h1 class="text-center">Molecular Dynamics - Introduction</h1>
+                        <div class="col mt-4 pt-4 mb-4 pb-4">
+                            <p>Considering a many-body system, molecular dynamics simulation can be used to determine the equilibrium an transport properties [1]. The aim of these simulations is not to predict what happen to a precisely known initial system but to investigate statistical predictions. To avoid large computational effort, these systems are considered classically, although, in principle, these have to be treated as quantum mechanical systems. In the following a many-body system of N = 1000 particles will be investigated. There are two different types of particles A and B, which interact through the Lennard Jones potential
+                            \[
+                                V_{ij}(r_{ij}) = 4 \epsilon_{\alpha \beta} \left[ \left( \frac{\sigma_{\alpha \beta}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{\alpha \beta}}{r_{ij}} \right)^{6} \right]
+                            \]
+                            with the parameters \( \epsilon_{\alpha \beta} \) and \( \sigma_{\alpha \beta} \) where \( \alpha, \beta \in A, B \) and \( r_{i,j} \) as the distance between particle \(i\) \(j\). In the classical system, the forces of the particles, and therefore the equations of motions are
+                            \[
+                                \vec{F_i} = m_i \vec{a_i} = - \Delta_i V
+                            \]
+                            To solve these equations of motions the implementation of the velocity Verlet algorithm is used. The molecular dynamics simulation can be treated in different thermodynamic ensembles, where this assignment investigates distance distributions and diffusion properties of the system in the microcanonical (NVE) and canonical (NVT) ensemble.</p>
+                        </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- algorithm section-->
+    <div class = "section">
+        <section class= "algorithm" id="algorithm">
+            <div class="section-container">
+                
+                <div class="scroll-container">
+                    <div class="container mt-4 pt-4 mb-4 pb-4">
+                        <h1 class="text-center">Molecular Dynamics - Algorithm</h1>
+                    
+                        <div class="col mt-4 pt-4 mb-4 pb-4">
+                            <p>Most of the molecular dynamic algorithms can be divided in three parts. The initialization of the system, the force calculation for each particle and the integration of the equations of motion. The Verlet algorithm uses the position of all particles at present and previous time steps as well as the force acting on the particles to calculate the new position for each particle.</p><br>
+
+                            <h5>1. Initialization</h5>
+                            <p>First, the initial positions and velocities of each particle from the many-body systems needs to assigned. The particles are placed on a simple cubic lattice to avoid positions that result in an overlap of the atomic or molecular cores. In terms of clearity, for 50 particles type A and 14 particles type B this is shown in figure 1. The velocities at starting conditions are initialized according to the Maxwell-Boltzmann distribution at given temperature T, where velocity components are normally distributed. Figure 2 shows the initial velocities for 1000 particles at given temperature T = 0.5.</p><br>
+
+                            <div class="row">
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_1.png" class="img-fluid" alt="First Image">
+                                </div>
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_2.png" class="img-fluid" alt="Second Image">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 1. Initial positions for 50 particles type A and 14 particles type B on a simple cubic lattice.</p>
+                                </div>
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 2. Initial velocities for 1000 particles at given temperature T = 0.5 according to the Maxwell-Boltzman distribution.</p>
+                                </div>
+                            </div>
+                              
+                              
+
+                            <h5>2. Force calculation</h5>
+                            <p>Calculation of the force acting on every particle is the most time-consuming part in molecular dynamics simulations. As the force depends on the distance between each particle, a system of N particles takes N2 time for all N x (N-1)/2 pair distances. With periodic boundary conditions effects due to the edge of the system can be ignored and the smallest distance may occur across the system edges. To save some force calculation time, the particles only interact with each other for distances smaller than the defined cutoff distance
+                            \[
+                                r_{ \alpha \beta }^{ cut } = 2.5 \sigma_{ \alpha, \beta} .
+                            \]
+                            For distances within the cutoff distance, the force component \( F_x\) results from the Lennard Jones potential
+                            \[
+                                F_x(r) = \frac{24x}{r^2} \left( \frac{2}{r^{12}}-\frac{1}{r^6} \right)
+                            \]
+                            with reduced units \( \epsilon_{\alpha \beta} = \sigma_{\alpha \beta} = 1  \).</p><br>
+
+                            <h5>3. Integrating the equation of motion</h5>
+                            <p>There are a lot of algorithms to integrate the equation of motion. To derive the new position for each particle in the system, a Taylor expansion of the coordinates of a particle around time t is used [1]. The so called Verlet algorithm then predicts the new particles position
+                            \[
+                            r(t + \Delta t) ≈ 2 r(t) - r(t - \Delta t) + \frac{F(t)}{m} \Delta t^2
+                            \]
+                            and its velocity from knowledge of th trajectory
+                            \[
+                            v(t) ≈ \frac{r(t + \Delta t) - r(t - \Delta t)}{2 \Delta t} .
+                            \]
+                            Δt is the time step between each calculation in this molecular dynamic simulation. As the Taylor expansion is canceled after Δt3, there is an error of the order Δt4 which is small for small time steps. For the first force calculation, the particles position at previous time step is unknown. As a result, the new particles position needs to be calculated with the knowledge of its initial velocity
+                            \[
+                            r(t + \Delta t) = r(t) + v \Delta t + \frac{F(t)}{m} \Delta t^2
+                            \]
+                            With the expression for the new positions r(t + Δt) in equation (5) and (7) the Verlet algorithm calculates the behaviour of every particle in the initialized many-body system. Figure 3 shows the pseudo code for integrating the equation of motion with the Verlet algorithm.
+                            
+                            <div class="row">
+                                <div class="col mx-4 px-4 d-flex flex-column  align-items-center">
+                                    <img src="../images/MD_3.png" style="max-height: 25vw;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 3. Pseudo code for integrating the equations of motion with the velocity Verlet algorithm [1].</p>
+                                </div>
+                            </div>
+                            
+                            After finding the new positions for all particles and calculating its velocities, the subroutine calculates the total kinetic energy and for each particle the current position becomes the old position and the new positions becomes the current position.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- microcanonical section-->
+    <div class = "section">
+        <section class= "microcanonical" id="microcanonical">
+            <div class="section-container">
+                
+                <div class="scroll-container">
+                    <div class="container mt-4 pt-4 mb-4 pb-4">
+                        <h1 class="text-center">Microcanonical Ensemble (NVE)</h1>
+                    
+                        <div class="col mt-4 pt-4 mb-4 pb-4">
+                            <p>In the microcanoical ensemble the systems total energy is constant but the kinetic and potential energy can vary. Figure 4 shows the behaviour of the energies per particle for 800 particles type A and 200 particles type B in the micorcanoical ensemble using the velocity Verlet algorithm.</p><br>
+                            <div class="row">
+                                <div class="col mx-4 px-4 d-flex flex-column  align-items-center">
+                                    <img src="../images/MD_4.png" style="max-height: 25vw;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 4. Energies in the microcanonical ensemble.</p>
+                                </div>
+                            </div>
+                            <p>After every loop of the molecular dynamic simulation the velocity centre of mass is approximately zero since the total energy is constant. At the beginning of the simulation, the kinetic and potential energy are quiet dynamic since at initial state the system is not in equilibrium. The Lennard Jones potential influences the kinetic and potential energies for the particles if they interact with each other. After some time and interactions, the kinetic and potential energy fluctuates around a constant value and the system is in equilibrium.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- canonical section-->
+    <div class = "section">
+        <section class= "canonical" id="canonical">
+            <div class="section-container">
+                
+                <div class="scroll-container">
+                    <div class="container mt-4 pt-4 mb-4 pb-4">
+                        <h1 class="text-center">Canonical Ensemble (NVT)</h1>
+                    
+                        <div class="col mt-4 pt-4 mb-4 pb-4">
+                            <p>Within the canonical ensemble the velocities have to be redrawn from the Maxwell-Boltzmann distribution in set intervals. In statistical mechanics this can be done by bringing the system in contact with a large heat bath. For a classical system the probability finding the system in a given energy state is given by the Boltzmann distribution. In this assignment the system is coupled to a heat bath using the Andersen Thermostat [2]. The coupling is represented by stochastic impulsive forces that act occasionally on randomly selected particles. The coupling strength is represented by a collision frequency and for uncorrelated collisions the distribution of time intervals between two stochastical collisions is of the Poisson form [3, 4]. In the algorithm with Andersen thermostat some selected particles undergo a collision with the heat bath and their new velocities are redrawn from the Maxwell-Boltzmann distribution. As a result, the molecular dynamic simulation turns into a Markov process where the future states of the selected particles are independent of the past states. In contrast to Newton's equation of motion, the Verlet algorithm with Andersen thermostat becomes irreversible in time.</p><br>
+                            
+                            <p>For the Anderson thermostat, initialization and force calculation are the same. The integration of the equation of motion differs in the canonical ensemble. After updating the velocities for all particles, some particle are chosen for undergoing a collision with a so called heat bath based on the collision frequency and the time step. For all selected particles the updated velocity components are given by Gaussian distribution. Figure 5 illustrates two histograms for the updated velocity components with the collision frequency v = 200 and v = 400. The distributions are of Gaussian form and independent of the value ot the collision frequency. The energy per particle for 800 particles type A and 200 particles type B in the canonical ensemble is shown in Figure 6.</p><br>
+                            <div class="row">
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_5.png" class="img-fluid" alt="First Image">
+                                </div>
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_6.png" class="img-fluid" alt="Second Image">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 5. Distribution for the new velocities of selected particles for the Anderson thermostat.</p>
+                                </div>
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 6. Energies in the canonical ensemble.</p>
+                                </div>
+                            </div>
+                            <p>Due to the constant temperature in the NVT system the kinetic energy per particle should be constant. As shown in Figure 6, the kinetic energy per particle fluctuates around the initial kinetic energy and the total energy is variable. At the beginning, the potential energy is decreasing since the system is relaxing. After some cycles of the velocity Verlet algorithm, the system is relaxed and the potential energy is almost constant. The conservation of energy is still present so that this implementation of Anderson thermostat is good for canonical ensembles. Figure 7 shows the initial distances between 300 particles type A and 43 particles type B.</p><br>
+                            <div class="row">
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_7.png" class="img-fluid" alt="First Image">
+                                </div>
+                                <div class="col mx-4 px-4 align-items-center">
+                                    <img src="../images/MD_8.png" class="img-fluid" alt="Second Image">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 7. Initial distances between each type of particle.</p>
+                                </div>
+                                <div class="col mx-5 my-2 px-5 py-2 d-flex flex-column align-items-center">
+                                    <p>FIG. 8. Final distances between each type of particle.</p>
+                                </div>
+                            </div>
+                            <p>The distribution of distances differentiates between the distances for particles of same type AA or BB and different type AB. Most of the initial distances are at discrete peaks because at the beginning, the particles are placed on a grid. Figure 8 shows the distances for the same particle after the Verlet algorithm. As the particles have initial velocities and interact with each other through the Lennard-Jones potential, the particles distances change after each cycle in the Verlet algorithm. The final distribution for each type of distance is of continuous form. At this time, the system is relaxed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+
+    
+    <!-- footer section-->
+    <footer id="footer">
+        <div class="container-fluid fixed-bottom">
+            <!-- social media icons -->
+            <div class="social-icons mt-4">
+                <a href="https://github.com/jannevers" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/jannik-evers-06a8481ba/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- load javascript after loading all html content -->
+    <!-- <script src="script/script.js"></script> -->
+
+</body>
+
+</html>
+ 
